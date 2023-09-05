@@ -1,0 +1,192 @@
+openapi: 3.0.2
+info:
+    title: Library Books API (v2)
+    version: 2.0.0
+    description: Manages a library books inventory
+servers:
+    -
+        url: >-
+            https://library-books-api-toolbox-demo-apicast-production.apps.cluster-6nk4t.6nk4t.sandbox2675.opentlc.com
+        description: Server URL
+paths:
+    /v1/books:
+        summary: Path used to manage the list of books-v1.
+        description: >-
+            The REST endpoint/path used to list and create zero or more `Books-v1` entities.  This path
+            contains a `GET` operation to perform the list tasks.
+        get:
+            tags:
+                - Books
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Books-v1'
+                            examples:
+                                Books-v1:
+                                    value:
+                                        -
+                                            authorName: Mary Shelley
+                                            copies: 10
+                                            title: Frankenstein
+                                            year: 1818
+                                        -
+                                            authorName: Charles Dickens
+                                            copies: 5
+                                            title: A Christmas Carol
+                                            year: 1843
+                                        -
+                                            authorName: Jane Austen
+                                            copies: 3
+                                            title: Pride and Prejudice
+                                            year: 1813
+                    description: Successful response - returns an array of `Books-v1` entities.
+            deprecated: true
+            operationId: getBooks-v1
+            summary: List All Books-v1
+            description: Gets a list of all `Books-v1` entities.
+    /v2/books:
+        summary: Path used to manage the list of books-v2.
+        description: >-
+            The REST endpoint/path used to list and create zero or more `Books-v2` entities.  This path
+            contains a `GET` operation to perform the list tasks.
+        get:
+            tags:
+                - Books
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Books-v2'
+                            examples:
+                                Books-v2:
+                                    value:
+                                        -
+                                            author:
+                                                birthDate: '1797-08-30T00:00:00.000Z'
+                                                name: Mary Shelley
+                                            copies: 10
+                                            title: Frankenstein
+                                            year: 1818
+                                        -
+                                            author:
+                                                birthDate: '1812-02-07T00:00:00.000Z'
+                                                name: Charles Dickens
+                                            copies: 5
+                                            title: A Christmas Carol
+                                            year: 1843
+                                        -
+                                            author:
+                                                birthDate: '1775-12-16T00:00:00.000Z'
+                                                name: Charles Dickens
+                                            copies: 3
+                                            title: Pride and Prejudice
+                                            year: 1813
+                    description: Successful response - returns an array of `Books-v2` entities.
+            operationId: getBooks-v2
+            summary: List All Books-v2
+            description: Gets a list of all `Books-v2` entities.
+components:
+    schemas:
+        Books-v1:
+            title: Root Type for Books-v1
+            description: List of books (v1)
+            type: array
+            items:
+                type: object
+                properties:
+                    authorName:
+                        type: string
+                    copies:
+                        format: int32
+                        type: integer
+                    title:
+                        type: string
+                    year:
+                        format: int32
+                        type: integer
+            example:
+                -
+                    authorName: Mary Shelley
+                    copies: 10
+                    title: Frankenstein
+                    year: 1818
+                -
+                    authorName: Charles Dickens
+                    copies: 5
+                    title: A Christmas Carol
+                    year: 1843
+                -
+                    authorName: Jane Austen
+                    copies: 3
+                    title: Pride and Prejudice
+                    year: 1813
+        Books-v2:
+            title: Root Type for Books-v2
+            description: List of Books (v2)
+            type: array
+            items:
+                type: object
+                properties:
+                    author:
+                        type: object
+                        properties:
+                            birthDate:
+                                format: date-time
+                                type: string
+                            name:
+                                type: string
+                    copies:
+                        format: int32
+                        type: integer
+                    title:
+                        type: string
+                    year:
+                        format: int32
+                        type: integer
+            example:
+                -
+                    author:
+                        birthDate: '1797-08-30T00:00:00.000Z'
+                        name: Mary Shelley
+                    copies: 10
+                    title: Frankenstein
+                    year: 1818
+                -
+                    author:
+                        birthDate: '1812-02-07T00:00:00.000Z'
+                        name: Charles Dickens
+                    copies: 5
+                    title: A Christmas Carol
+                    year: 1843
+                -
+                    author:
+                        birthDate: '1775-12-16T00:00:00.000Z'
+                        name: Charles Dickens
+                    copies: 3
+                    title: Pride and Prejudice
+                    year: 1813
+    securitySchemes:
+        oidc:
+            flows:
+                clientCredentials:
+                    tokenUrl: >-
+                        https://sso.apps.cluster-6nk4t.6nk4t.sandbox2675.opentlc.com/auth/realms/toolbox-demo/protocol/openid-connect/token
+                    scopes:
+                        openid: ''
+            type: oauth2
+            description: OpenID Connect
+security:
+    -
+        oidc:
+            - openid
+tags:
+    -
+        name: Books
+        description: ''

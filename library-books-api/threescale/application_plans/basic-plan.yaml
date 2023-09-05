@@ -1,0 +1,39 @@
+---
+plan:
+  name: Basic
+  state: published
+  setup_fee: 0.0
+  cost_per_month: 0.0
+  trial_period_days: 0
+  cancellation_period: 0
+  approval_required: false
+  system_name: basic-plan
+limits:
+- period: eternity
+  value: 0
+  metric_system_name: get-books-v1
+- period: minute
+  value: 5
+  metric_system_name: get-books-v2
+pricingrules: []
+plan_features:
+- name: 'Free'
+  system_name: free
+  scope: application_plan
+  visible: true
+  description: 'Free'
+- name: 'Limited calls'
+  system_name: limited_calls
+  scope: application_plan
+  visible: true
+  description: 'Limited calls'
+metrics: []
+methods:
+- name: get-books-v1
+  system_name: get-books-v1
+  friendly_name: getBooks-v1
+  description: List All Books-v1
+- name: get-books-v2
+  system_name: get-books-v2
+  friendly_name: getBooks-v2
+  description: List All Books-v2

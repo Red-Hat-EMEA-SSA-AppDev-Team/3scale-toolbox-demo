@@ -1,0 +1,30 @@
+---
+- name: cors
+  version: builtin
+  configuration:
+    allow_credentials: true
+    allow_headers:
+    - Authorization
+    - Content-Type
+    allow_origin: "*"
+    allow_methods:
+    - GET
+    - OPTIONS
+  enabled: true
+- name: caching
+  version: builtin
+  configuration:
+    caching_type: resilient
+  enabled: true
+- name: logging
+  version: builtin
+  configuration:
+    condition:
+      combine_op: and
+    enable_access_logs: true
+    custom_logging: '[{{time_local}}] [client IP: "{{jwt.clientAddress}}" - client Id: "{{jwt.clientId}}"] [local: "{{host}}:{{server_port}}"] [remote: "{{remote_addr}}:{{remote_port}}"] [request: "{{request}}" - service Id: "{{service.id}}" - service name: "{{service.system_name}}" - status: "{{status}}" - body bytes sent: "{{body_bytes_sent}}" - request time: "{{request_time}}" - post action impact: "{{post_action_impact}}"]'
+  enabled: true
+- name: apicast
+  version: builtin
+  configuration: {}
+  enabled: true

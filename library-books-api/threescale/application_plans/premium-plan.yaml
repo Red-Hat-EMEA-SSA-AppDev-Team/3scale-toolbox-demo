@@ -1,0 +1,47 @@
+---
+plan:
+  name: Premium
+  state: published
+  setup_fee: 15.0
+  cost_per_month: 5.0
+  trial_period_days: 0
+  cancellation_period: 0
+  approval_required: true
+  system_name: premium-plan
+limits:
+- period: eternity
+  value: 0
+  metric_system_name: get-books-v1
+- period: minute
+  value: 1200
+  metric_system_name: get-books-v2
+pricingrules:
+- cost_per_unit: '0.05'
+  min: 1
+  max: 200
+  metric_system_name: get-books-v2
+- cost_per_unit: '0.01'
+  min: 201
+  max: 10000
+  metric_system_name: get-books-v2
+plan_features:
+- name: 'Paid'
+  system_name: paid
+  scope: application_plan
+  visible: true
+  description: 'Paid'
+- name: 'Unlimited calls'
+  system_name: unlimited_calls
+  scope: application_plan
+  visible: true
+  description: 'Unlimited calls'
+metrics: []
+methods:
+- name: get-books-v1
+  system_name: get-books-v1
+  friendly_name: getBooks-v1
+  description: List All Books-v1
+- name: get-books-v2
+  system_name: get-books-v2
+  friendly_name: getBooks-v2
+  description: List All Books-v2
