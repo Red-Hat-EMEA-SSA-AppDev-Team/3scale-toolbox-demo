@@ -22,7 +22,7 @@ Red Hat 3scale Toolbox **version 2.13.4** is used in these instructions.
 
 ## Instructions 
 
-### Notes
+### ::bulb:: Notes
 
 The following environment variables are used in the scope of these instructions. Please, do set them according to your Red Hat 3scale environment.
 
@@ -35,7 +35,7 @@ The following environment variables are used in the scope of these instructions.
 - `THREESCALE_TENANT_ADMIN_PORTAL_HOSTNAME`: FQDN of the remote 3scale API Manager tenant.
 - `THREESCALE_TOOLBOX_DESTINATION`: name of the remote 3scale API Manager tenant registered in the 3scale Toolbox CLI
 
-### Deploy the _Library Books API_ backend services
+### 1. Deploy the _Library Books API_ backend services
 
 1. Create the `library-apis` namespace:
     ```
@@ -47,7 +47,7 @@ The following environment variables are used in the scope of these instructions.
     oc -n library-apis apply -f library-books-api/openshift_manifests/books-api-v2.yaml
     ```
 
-### Setup the 3scale-toolbox CLI
+### 2. Setup the 3scale-toolbox CLI
 
 1. Set the following environment variables according to your 3scale environment. Example:
     ```script shell
@@ -79,7 +79,7 @@ The following environment variables are used in the scope of these instructions.
     alias 3scale="podman run --rm -v ${ABSOLUTE_BASE_PATH}/3scale-toolbox-demo/library-books-api:/tmp/toolbox/library-books-api:Z 3scale-toolbox-demo 3scale -k"
     ```
 
-### Secure the _Library Books API_ using Red Hat 3scale API Management with OpenID Connect
+### 3. Secure the _Library Books API_ using Red Hat 3scale API Management with OpenID Connect
 
 1. Import the [`toolbox-demo` realm](./rhsso-realm/toolbox-demo_realm-export.json) in your [Red Hat Single Sign-On v7.6](https://access.redhat.com/products/red-hat-single-sign-on/) instance.
 
