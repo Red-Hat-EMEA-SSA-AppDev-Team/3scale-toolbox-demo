@@ -2,7 +2,7 @@
 
 ## Purpose of this repository
 
-This repository contains demo instructions for setting up and running the [Red Hat 3scale Toolbox CLI](https://access.redhat.com/documentation/en-us/red_hat_THREESCALE_api_management/2.13/html/operating_3scale/the-threescale-toolbox#doc-wrapper) using [podman]([Podman](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/building_running_and_managing_containers/index).
+This repository contains demo instructions for setting up and running the [Red Hat 3scale Toolbox CLI](https://access.redhat.com/documentation/en-us/red_hat_THREESCALE_api_management/2.13/html/operating_3scale/the-threescale-toolbox#doc-wrapper) using [Podman](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/building_running_and_managing_containers/index).
 
 
 Red Hat 3scale Toolbox **version 2.13.4** is used in these instructions.
@@ -108,19 +108,19 @@ The following environment variables are used in the scope of these instructions.
 
 4. Import the application plans.
 
-    **Basic plan**
-    ```script shell
-    3scale application-plan import \
-    --file=/tmp/toolbox/library-books-api/threescale/application_plans/basic-plan.yaml \
-    ${THREESCALE_TOOLBOX_DESTINATION} library-books-api
-    ```
+    - Basic plan 
+        ```script shell
+        3scale application-plan import \
+        --file=/tmp/toolbox/library-books-api/threescale/application_plans/basic-plan.yaml \
+        ${THREESCALE_TOOLBOX_DESTINATION} library-books-api
+        ```
 
-    **Premium plan**
-    ```script shell
-    3scale application-plan import \
-    --file=/tmp/toolbox/library-books-api/threescale/application_plans/premium-plan.yaml \
-    ${THREESCALE_TOOLBOX_DESTINATION} library-books-api
-    ```
+    - Premium plan
+        ```script shell
+        3scale application-plan import \
+        --file=/tmp/toolbox/library-books-api/threescale/application_plans/premium-plan.yaml \
+        ${THREESCALE_TOOLBOX_DESTINATION} library-books-api
+        ```
 
 5. Import the policy chain. 
     ```script shell
@@ -151,13 +151,13 @@ The following environment variables are used in the scope of these instructions.
     ${THREESCALE_TOOLBOX_DESTINATION} john library-books-api basic-plan "Developer's App"
     ```
 
-    **`Developer's App` application credentials in 3scale:**
+    - `Developer's App` application credentials in 3scale:
 
-    ![](./images/3scale_application_credentials.png)
+        ![](./images/3scale_application_credentials.png)
 
-    **`Developer's App` application credentials dynamically synchronized in Red Hat Single Sign-On:**
+    - `Developer's App` application credentials dynamically synchronized in Red Hat Single Sign-On:
 
-    ![](./images/rh-sso_3scale_application_credentials.png)
+        ![](./images/rh-sso_3scale_application_credentials.png)
 
 8. Promote latest staging Proxy Configuration to the production environment
     ```script shell
