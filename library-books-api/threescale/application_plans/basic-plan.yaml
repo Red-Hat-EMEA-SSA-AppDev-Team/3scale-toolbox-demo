@@ -11,10 +11,10 @@ plan:
 limits:
 - period: eternity
   value: 0
-  metric_system_name: get-books-v1
+  metric_system_name: getbooks_v1
 - period: minute
   value: 5
-  metric_system_name: get-books-v2
+  metric_system_name: getbooks_v2
 pricingrules: []
 plan_features:
 - name: 'Free'
@@ -29,11 +29,11 @@ plan_features:
   description: 'Limited calls'
 metrics: []
 methods:
-- name: get-books-v1
-  system_name: get-books-v1
+- name: getbooks_v1
+  system_name: getbooks_v1
   friendly_name: getBooks-v1
   description: List All Books-v1
-- name: get-books-v2
-  system_name: get-books-v2
+- name: getbooks_v2
+  system_name: getbooks_v2
   friendly_name: getBooks-v2
   description: List All Books-v2

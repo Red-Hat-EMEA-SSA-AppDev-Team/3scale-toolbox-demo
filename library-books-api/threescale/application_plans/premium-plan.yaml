@@ -11,19 +11,19 @@ plan:
 limits:
 - period: eternity
   value: 0
-  metric_system_name: get-books-v1
+  metric_system_name: getbooks_v1
 - period: minute
   value: 1200
-  metric_system_name: get-books-v2
+  metric_system_name: getbooks_v2
 pricingrules:
 - cost_per_unit: '0.05'
   min: 1
   max: 200
-  metric_system_name: get-books-v2
+  metric_system_name: getbooks_v2
 - cost_per_unit: '0.01'
   min: 201
   max: 10000
-  metric_system_name: get-books-v2
+  metric_system_name: getbooks_v2
 plan_features:
 - name: 'Paid'
   system_name: paid
@@ -37,11 +37,11 @@ plan_features:
   description: 'Unlimited calls'
 metrics: []
 methods:
-- name: get-books-v1
-  system_name: get-books-v1
+- name: getbooks_v1
+  system_name: getbooks_v1
   friendly_name: getBooks-v1
   description: List All Books-v1
-- name: get-books-v2
-  system_name: get-books-v2
+- name: getbooks_v2
+  system_name: getbooks_v2
   friendly_name: getBooks-v2
   description: List All Books-v2
