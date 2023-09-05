@@ -28,3 +28,12 @@
   version: builtin
   configuration: {}
   enabled: true
+- name: url_rewriting
+  version: builtin
+  configuration:
+    query_args_commands: []
+    commands:
+    - regex: "/v2"
+      op: sub
+      replace: "/"
+  enabled: true
