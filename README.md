@@ -22,7 +22,7 @@ Red Hat 3scale Toolbox **version 2.13.4** is used in these instructions.
 
 ## Instructions 
 
-### ::bulb:: Notes
+### :bulb: Notes
 
 The following environment variables are used in the scope of these instructions. Please, do set them according to your Red Hat 3scale environment.
 
@@ -35,7 +35,7 @@ The following environment variables are used in the scope of these instructions.
 - `THREESCALE_TENANT_ADMIN_PORTAL_HOSTNAME`: FQDN of the remote 3scale API Manager tenant.
 - `THREESCALE_TOOLBOX_DESTINATION`: name of the remote 3scale API Manager tenant registered in the 3scale Toolbox CLI
 
-### 1. Deploy the _Library Books API_ backend services
+### I. Deploy the _Library Books API_ backend services
 
 1. Create the `library-apis` namespace:
     ```
@@ -47,7 +47,7 @@ The following environment variables are used in the scope of these instructions.
     oc -n library-apis apply -f library-books-api/openshift_manifests/books-api-v2.yaml
     ```
 
-### 2. Setup the 3scale-toolbox CLI
+### II. Setup the 3scale-toolbox CLI
 
 1. Set the following environment variables according to your 3scale environment. Example:
     ```script shell
@@ -79,7 +79,7 @@ The following environment variables are used in the scope of these instructions.
     alias 3scale="podman run --rm -v ${ABSOLUTE_BASE_PATH}/3scale-toolbox-demo/library-books-api:/tmp/toolbox/library-books-api:Z 3scale-toolbox-demo 3scale -k"
     ```
 
-### 3. Secure the _Library Books API_ using Red Hat 3scale API Management with OpenID Connect
+### III. Secure the _Library Books API_ using Red Hat 3scale API Management with OpenID Connect
 
 1. Import the [`toolbox-demo` realm](./rhsso-realm/toolbox-demo_realm-export.json) in your [Red Hat Single Sign-On v7.6](https://access.redhat.com/products/red-hat-single-sign-on/) instance.
 
@@ -150,6 +150,14 @@ The following environment variables are used in the scope of these instructions.
     --description="Developer's Application to the Library Books API (testing purposes)" \
     ${THREESCALE_TOOLBOX_DESTINATION} john library-books-api basic-plan "Developer's App"
     ```
+
+    **`Developer's App` application credentials in 3scale:**
+
+    ![](./images/3scale_application_credentials.png)
+
+    **`Developer's App` application credentials dynamically synchronized in Red Hat Single Sign-On:**
+
+    ![](./images/rh-sso_3scale_application_credentials.png)
 
 8. Promote latest staging Proxy Configuration to the production environment
     ```script shell
