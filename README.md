@@ -5,7 +5,7 @@
 This repository contains demo instructions for setting up and running the [Red Hat 3scale Toolbox CLI](https://access.redhat.com/documentation/en-us/red_hat_THREESCALE_api_management/2.13/html/operating_3scale/the-threescale-toolbox#doc-wrapper) using [Podman](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/building_running_and_managing_containers/index).
 
 
-Red Hat 3scale Toolbox **version 2.13.4** is used in these instructions.
+Red Hat 3scale Toolbox **v2.13.4** is used in these instructions.
 
 ## Prerequisites
 
@@ -51,11 +51,11 @@ The following environment variables are used in the scope of these instructions.
 
 1. Set the following environment variables according to your 3scale environment. Example:
     ```script shell
-    THREESCALE_TENANT=toolbox-demo
-    THREESCALE_TOOLBOX_DESTINATION=rhpds-toolbox-demo
-    OCP_DOMAIN=apps.cluster-6nk4t.6nk4t.sandbox2675.opentlc.com
-    THREESCALE_TENANT_ADMIN_PORTAL_HOSTNAME=${THREESCALE_TENANT}-admin.${OCP_DOMAIN}
-    ABSOLUTE_BASE_PATH=/home/lab-user
+    export ABSOLUTE_BASE_PATH=/home/lab-user
+    export OCP_DOMAIN=apps.cluster-6nk4t.6nk4t.sandbox2675.opentlc.com
+    export THREESCALE_TENANT=toolbox-demo
+    export THREESCALE_TENANT_ADMIN_PORTAL_HOSTNAME=${THREESCALE_TENANT}-admin.${OCP_DOMAIN}
+    export THREESCALE_TOOLBOX_DESTINATION=rhpds-toolbox-demo
     ```
 
 2. Create a named container that contains the remote 3scale tenant connection credentials.
@@ -85,26 +85,34 @@ The following environment variables are used in the scope of these instructions.
 
     ![](./images/rh-sso_import_realm.png)
 
-    > **NOTE**: The `threscale-zync` client is already provisioned in the `toolbox-demo` realm. Please, regenerate the client secret as it will be used in the following instructions.
+    > **NOTE**: The `threscale-zync` client is already provisioned in the `toolbox-demo` realm. Regenerate the client secret as it will be used in the following instructions.
 
     ![](./images/rh-sso_threescale-zync.png)
 
 2. Set the following environment variables according to your Red Hat Single Sign-On environment. Example:
     ```script shell
-    RH_SSO_HOSTNAME=sso.apps.cluster-6nk4t.6nk4t.sandbox2675.opentlc.com
-    RH_SSO_THREESCALE_SCALE_ZYNC_SECRET=ixiGTiYybo59qolkcpM6wd7BGN5oBzAa
+    export RH_SSO_HOSTNAME=sso.apps.cluster-6nk4t.6nk4t.sandbox2675.opentlc.com
+    export RH_SSO_THREESCALE_SCALE_ZYNC_SECRET=ixiGTiYybo59qolkcpM6wd7BGN5oBzAa
     ```
 
-3. Import the _Library Books API_ in 3scale using the OpenAPI specification.
+3. Import the _Library Books API_ in 3scale using its OpenAPI specification.
 
     ```script shell
     3scale import openapi \
-    --override-private-base-url="http://books-api-v1.library-apis.svc.cluster.local/api/v2" \
+    --override-private-base-url="http://books-api-v2.library-apis.svc.cluster.local/api/v2" \
     --oidc-issuer-type=keycloak \
     --oidc-issuer-endpoint="https://threescale-zync:${RH_SSO_THREESCALE_SCALE_ZYNC_SECRET}@${RH_SSO_HOSTNAME}/auth/realms/toolbox-demo" \
     --target_system_name=library-books-api \
     -d ${THREESCALE_TOOLBOX_DESTINATION} /tmp/toolbox/library-books-api/threescale/openapi/LibraryBooksAPI_v2.yaml
     ```
+
+    After importing, you should find the _Library Books API_ product and backend objects on the 3scale Admin Portal dashboard.
+
+    ![](./images/3scale_admin_dashboard.png)
+
+    You can drill down into the details of each object to verify all the configurations that have been automatically applied based on the OpenAPI specification. For instance, the 3scale API product mapping rules.
+
+    ![](./images/3scale_product_mappingrules.png)
 
 4. Import the application plans.
 
@@ -121,6 +129,14 @@ The following environment variables are used in the scope of these instructions.
         --file=/tmp/toolbox/library-books-api/threescale/application_plans/premium-plan.yaml \
         ${THREESCALE_TOOLBOX_DESTINATION} library-books-api
         ```
+
+    After importing, you should find the `Basic` and `Premium` plans on the _Library Books API_ product page of the 3scale Admin Portal.
+
+    ![](./images/3scale_product_applicationplans.png)
+
+    You can drill down into the details of each application plan to verify all the configurations that have been. For instance, the details of the `Basic` are shown below.
+
+    ![](./images/3scale_product_basicplan.png)
 
 5. Import the policy chain. 
     ```script shell
@@ -139,7 +155,7 @@ The following environment variables are used in the scope of these instructions.
 
 6. Promote the APIcast configuration to the Staging Environment.
     ```script shell
-    3scale proxy deploy ${THREESCALE_TOOLBOX_DESTINATION}  library-books-api
+    3scale proxy deploy ${THREESCALE_TOOLBOX_DESTINATION} library-books-api
     ```
 
     ![](./images/3scale_promote-staging.png)
@@ -159,7 +175,7 @@ The following environment variables are used in the scope of these instructions.
 
         ![](./images/rh-sso_3scale_application_credentials.png)
 
-8. Promote latest staging Proxy Configuration to the production environment
+8. After performing some tests of your configuration in the 3scale staging environment, you can promote the latest staging Proxy Configuration to the 3scale production environment.
     ```script shell
     3scale proxy-config promote ${THREESCALE_TOOLBOX_DESTINATION} library-books-api
     ```
