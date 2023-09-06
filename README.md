@@ -175,7 +175,108 @@ The following environment variables are used in the scope of these instructions.
 
         ![](./images/rh-sso_3scale_application_credentials.png)
 
-8. After performing some tests of your configuration in the 3scale staging environment, you can promote the latest staging Proxy Configuration to the 3scale production environment.
+8. Perform some testing of your configuration in the 3scale staging environment.
+
+    1. Get the OpenID Connect access token from your Red Hat Single Sign-On instance. Example using [httpie](https://httpie.io/) and [jq](https://jqlang.github.io/jq/):
+
+        > **NOTE**: replace `client_id` and `client_secret` values with your 3scale application credentials
+        ```script shell
+        TOKEN=$(http --form POST https://${RH_SSO_HOSTNAME}/auth/realms/toolbox-demo/protocol/openid-connect/token grant_type="client_credentials" client_id="c2fcdaf0" client_secret="91d58f193e0361e1dfd464cd22d9e914" scope="openid" | jq -r .access_token) && echo $TOKEN
+        ```
+
+    2. Test the forbidden `/v1/books` path 
+
+        > **NOTE**: Adjust the 3scale _Staging Public Base URL_ according to your environment.
+        ```script shell
+        http https://library-books-api-toolbox-demo-apicast-staging.${OCP_DOMAIN}/v1/books "Authorization: Bearer ${TOKEN}"
+        ```
+
+        The 3scale API gateway should reject the request.
+        ```script shell
+        HTTP/1.1 403 Forbidden
+        Set-Cookie: 53778cee9e38d74175ba9f9b935fafa3=029543885803175ab074c39d7f68f2a1; path=/; HttpOnly; Secure; SameSite=None
+        content-type: text/plain; charset=us-ascii
+        date: Wed, 06 Sep 2023 08:35:58 GMT
+        server: openresty
+        set-cookie: 53778cee9e38d74175ba9f9b935fafa3=029543885803175ab074c39d7f68f2a1; path=/; HttpOnly; Secure; SameSite=None
+        transfer-encoding: chunked
+
+        Authentication failed
+        ```
+
+    3. Test the authorized `/v2/books` path
+
+        > **NOTE**: Adjust the 3scale _Staging Public Base URL_ according to your environment.
+        ```script shell
+        http https://library-books-api-toolbox-demo-apicast-staging.${OCP_DOMAIN}/v2/books "Authorization: Bearer ${TOKEN}"
+        ```
+
+        The 3scale API gateway should reject the request.
+        ```script shell
+        HTTP/1.1 200 OK
+        Set-Cookie: 53778cee9e38d74175ba9f9b935fafa3=029543885803175ab074c39d7f68f2a1; path=/; HttpOnly; Secure; SameSite=None
+        cache-control: private
+        content-length: 380
+        content-type: application/json; charset=utf-8
+        date: Wed, 06 Sep 2023 08:36:30 GMT
+        etag: W/"17c-mAOxgNf23v8UFtVUQAqCm0SsCUA"
+        server: openresty
+        set-cookie: 53778cee9e38d74175ba9f9b935fafa3=029543885803175ab074c39d7f68f2a1; path=/; HttpOnly; Secure; SameSite=None
+        x-powered-by: Express
+
+        [
+            {
+                "author": {
+                    "birthDate": "1797-08-30T00:00:00.000Z",
+                    "name": "Mary Shelley"
+                },
+                "copies": 10,
+                "title": "Frankenstein",
+                "year": 1818
+            },
+            {
+                "author": {
+                    "birthDate": "1812-02-07T00:00:00.000Z",
+                    "name": "Charles Dickens"
+                },
+                "copies": 5,
+                "title": "A Christmas Carol",
+                "year": 1843
+            },
+            {
+                "author": {
+                    "birthDate": "1775-12-16T00:00:00.000Z",
+                    "name": "Charles Dickens"
+                },
+                "copies": 3,
+                "title": "Pride and Prejudice",
+                "year": 1813
+            }
+        ]
+        ```
+
+    4. Test rate limit (5 calls/mn). After 5 consecutive requests, the 3scale API gateway should reject your call.
+
+        > **NOTE**: Adjust the 3scale _Staging Public Base URL_ according to your environment.
+        ```script shell
+        http https://library-books-api-toolbox-demo-apicast-staging.${OCP_DOMAIN}/v2/books "Authorization: Bearer ${TOKEN}"
+        ```
+
+        The 3scale API gateway should reject the request.
+        ```script shell
+        HTTP/1.1 429 Too Many Requests
+        Set-Cookie: 53778cee9e38d74175ba9f9b935fafa3=029543885803175ab074c39d7f68f2a1; path=/; HttpOnly; Secure; SameSite=None
+        content-type: text/plain; charset=us-ascii
+        date: Wed, 06 Sep 2023 08:37:57 GMT
+        retry-after: 3
+        server: openresty
+        set-cookie: 53778cee9e38d74175ba9f9b935fafa3=029543885803175ab074c39d7f68f2a1; path=/; HttpOnly; Secure; SameSite=None
+        transfer-encoding: chunked
+
+        Usage limit exceeded
+        ```
+
+9. After performing some tests of your configuration in the 3scale staging environment, you can now promote the latest staging Proxy Configuration to the 3scale production environment.
     ```script shell
     3scale proxy-config promote ${THREESCALE_TOOLBOX_DESTINATION} library-books-api
     ```
