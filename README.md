@@ -181,7 +181,13 @@ The following environment variables are used in the scope of these instructions.
 
         > **NOTE**: replace `client_id` and `client_secret` values with your 3scale application credentials
         ```script shell
-        TOKEN=$(http --form POST https://${RH_SSO_HOSTNAME}/auth/realms/toolbox-demo/protocol/openid-connect/token grant_type="client_credentials" client_id="c2fcdaf0" client_secret="91d58f193e0361e1dfd464cd22d9e914" scope="openid" | jq -r .access_token) && echo $TOKEN
+        TOKEN=$(http --form POST \
+        https://${RH_SSO_HOSTNAME}/auth/realms/toolbox-demo/protocol/openid-connect/token \
+        grant_type="client_credentials" \
+        client_id="c2fcdaf0" \
+        client_secret="91d58f193e0361e1dfd464cd22d9e914" \
+        scope="openid" | jq -r .access_token) \
+        && echo $TOKEN
         ```
 
     2. Test the forbidden `/v1/books` path 
