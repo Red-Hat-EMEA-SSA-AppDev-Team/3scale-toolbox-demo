@@ -134,7 +134,7 @@ The following environment variables are used in the scope of these instructions.
 
     ![](./images/3scale_product_applicationplans.png)
 
-    You can drill down into the details of each application plan to verify all the configurations that have been. For instance, the details of the `Basic` are shown below.
+    You can drill down into the details of each application plan to verify the configurations that has been applied. For instance, the details of the `Basic` are shown below.
 
     ![](./images/3scale_product_basicplan.png)
 
@@ -160,7 +160,7 @@ The following environment variables are used in the scope of these instructions.
 
     ![](./images/3scale_promote-staging.png)
 
-7. Create an application with the default Developer account on the Basic plan for testing the configuration.
+7. Create an application with the default Developer account subscribing to the service Basic plan in order to test the configuration.
     ```script shell
     3scale application create \
     --description="Developer's Application to the Library Books API (testing purposes)" \
@@ -171,7 +171,7 @@ The following environment variables are used in the scope of these instructions.
 
         ![](./images/3scale_application_credentials.png)
 
-    - `Developer's App` application credentials dynamically synchronized in Red Hat Single Sign-On:
+    - `Developer's App` application credentials are dynamically synchronized in Red Hat Single Sign-On:
 
         ![](./images/rh-sso_3scale_application_credentials.png)
 
@@ -198,7 +198,7 @@ The following environment variables are used in the scope of these instructions.
         ```
 
         The 3scale API gateway should reject the request.
-        ```script shell
+        ```console
         HTTP/1.1 403 Forbidden
         Set-Cookie: 53778cee9e38d74175ba9f9b935fafa3=029543885803175ab074c39d7f68f2a1; path=/; HttpOnly; Secure; SameSite=None
         content-type: text/plain; charset=us-ascii
@@ -218,7 +218,7 @@ The following environment variables are used in the scope of these instructions.
         ```
 
         The 3scale API gateway should reject the request.
-        ```script shell
+        ```console
         HTTP/1.1 200 OK
         Set-Cookie: 53778cee9e38d74175ba9f9b935fafa3=029543885803175ab074c39d7f68f2a1; path=/; HttpOnly; Secure; SameSite=None
         cache-control: private
@@ -269,7 +269,7 @@ The following environment variables are used in the scope of these instructions.
         ```
 
         The 3scale API gateway should reject the request.
-        ```script shell
+        ```console
         HTTP/1.1 429 Too Many Requests
         Set-Cookie: 53778cee9e38d74175ba9f9b935fafa3=029543885803175ab074c39d7f68f2a1; path=/; HttpOnly; Secure; SameSite=None
         content-type: text/plain; charset=us-ascii
