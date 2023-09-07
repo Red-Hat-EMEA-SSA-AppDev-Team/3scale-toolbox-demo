@@ -217,7 +217,7 @@ The following environment variables are used in the scope of these instructions.
         http https://library-books-api-toolbox-demo-apicast-staging.${OCP_DOMAIN}/v2/books "Authorization: Bearer ${TOKEN}"
         ```
 
-        The 3scale API gateway should reject the request.
+        The 3scale API gateway should authorize the request.
         ```console
         HTTP/1.1 200 OK
         Set-Cookie: 53778cee9e38d74175ba9f9b935fafa3=029543885803175ab074c39d7f68f2a1; path=/; HttpOnly; Secure; SameSite=None
