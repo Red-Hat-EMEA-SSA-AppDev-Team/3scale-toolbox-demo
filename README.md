@@ -52,8 +52,9 @@ The following environment variables are used in the scope of these instructions.
 1. Set the following environment variables according to your 3scale environment. Example:
     ```script shell
     export ABSOLUTE_BASE_PATH=/home/lab-user
-    export OCP_DOMAIN=apps.cluster-6nk4t.6nk4t.sandbox2675.opentlc.com
+    export OCP_DOMAIN=apps.cluster-tpbfg.tpbfg.sandbox318.opentlc.com
     export THREESCALE_TENANT=toolbox-demo
+    export THREESCALE_TENANT_ACCESS_TOKEN=d933768edd510543ed7088b60bc2576bc277b430a2f275be0de28e3ad7509f09
     export THREESCALE_TENANT_ADMIN_PORTAL_HOSTNAME=${THREESCALE_TENANT}-admin.${OCP_DOMAIN}
     export THREESCALE_TOOLBOX_DESTINATION=rhpds-toolbox-demo
     ```
@@ -91,7 +92,7 @@ The following environment variables are used in the scope of these instructions.
 
 2. Set the following environment variables according to your Red Hat Single Sign-On environment. Example:
     ```script shell
-    export RH_SSO_HOSTNAME=sso.apps.cluster-6nk4t.6nk4t.sandbox2675.opentlc.com
+    export RH_SSO_HOSTNAME=sso.apps.cluster-tpbfg.tpbfg.sandbox318.opentlc.com
     export RH_SSO_THREESCALE_SCALE_ZYNC_SECRET=ixiGTiYybo59qolkcpM6wd7BGN5oBzAa
     ```
 
