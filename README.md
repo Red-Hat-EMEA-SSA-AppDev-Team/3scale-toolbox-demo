@@ -5,7 +5,7 @@
 This repository contains demo instructions for setting up and running the [Red Hat 3scale Toolbox CLI](https://access.redhat.com/documentation/en-us/red_hat_THREESCALE_api_management/2.13/html/operating_3scale/the-threescale-toolbox#doc-wrapper) using [Podman](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/building_running_and_managing_containers/index).
 
 
-Red Hat 3scale Toolbox **v2.13.4** is used in these instructions.
+Red Hat 3scale Toolbox **v2.13** is used in these instructions.
 
 ## Prerequisites
 
@@ -62,7 +62,7 @@ The following environment variables are used in the scope of these instructions.
 2. Create a named container that contains the remote 3scale tenant connection credentials.
     ```script shell
     podman run --name 3scale-toolbox-original \
-    registry.redhat.io/3scale-amp2/toolbox-rhel8:3scale2.13.4 3scale remote \
+    registry.redhat.io/3scale-amp2/toolbox-rhel8:3scale2.13 3scale remote \
     add ${THREESCALE_TOOLBOX_DESTINATION} https://${THREESCALE_TENANT_ACCESS_TOKEN}@${THREESCALE_TENANT_ADMIN_PORTAL_HOSTNAME}
     ```
 
