@@ -29,7 +29,7 @@ The following environment variables are used in the scope of these instructions.
 - `ABSOLUTE_BASE_PATH`: absolute path to the working directory where you cloned this repository
 - `OCP_DOMAIN`: the application domain of the Red Hat OpenShift cluster hosting the 3scale API Manager.
 - `RH_SSO_HOSTNAME`: FQDN of the Red Hat Single Sign-On instance.
-- `RH_SSO_THREESCALE_SCALE_ZYNC_SECRET`: secret of the `threescale-zync` client in Red Hat Single Sign-On. This client is used by the remote 3scale API Manager tenant to dynamically register and synchonize the service application credentials.
+- `RH_SSO_THREESCALE_ZYNC_SECRET`: secret of the `threescale-zync` client in Red Hat Single Sign-On. This client is used by the remote 3scale API Manager tenant to dynamically register and synchonize the service application credentials.
 - `THREESCALE_TENANT`: name of the remote 3scale API Manager tenant
 - `THREESCALE_TENANT_ACCESS_TOKEN`: access token with read-write permissions on all scopes of the remote 3scale API Manager tenant.
 - `THREESCALE_TENANT_ADMIN_PORTAL_HOSTNAME`: FQDN of the remote 3scale API Manager tenant.
@@ -52,7 +52,7 @@ The following environment variables are used in the scope of these instructions.
 1. Set the following environment variables according to your 3scale environment. Example:
     ```script shell
     export ABSOLUTE_BASE_PATH=/home/lab-user
-    export OCP_DOMAIN=apps.cluster-tpbfg.tpbfg.sandbox318.opentlc.com
+    export OCP_DOMAIN=apps.cluster-8bcs7.8bcs7.sandbox2056.opentlc.com
     export THREESCALE_TENANT=toolbox-demo
     export THREESCALE_TENANT_ACCESS_TOKEN=d933768edd510543ed7088b60bc2576bc277b430a2f275be0de28e3ad7509f09
     export THREESCALE_TENANT_ADMIN_PORTAL_HOSTNAME=${THREESCALE_TENANT}-admin.${OCP_DOMAIN}
@@ -92,8 +92,8 @@ The following environment variables are used in the scope of these instructions.
 
 2. Set the following environment variables according to your Red Hat Single Sign-On environment. Example:
     ```script shell
-    export RH_SSO_HOSTNAME=sso.apps.cluster-tpbfg.tpbfg.sandbox318.opentlc.com
-    export RH_SSO_THREESCALE_SCALE_ZYNC_SECRET=ixiGTiYybo59qolkcpM6wd7BGN5oBzAa
+    export RH_SSO_HOSTNAME=sso.apps.cluster-8bcs7.8bcs7.sandbox2056.opentlc.com
+    export RH_SSO_THREESCALE_ZYNC_SECRET=ixiGTiYybo59qolkcpM6wd7BGN5oBzAa
     ```
 
 3. Import the _Library Books API_ in 3scale using its OpenAPI specification.
@@ -102,7 +102,7 @@ The following environment variables are used in the scope of these instructions.
     3scale import openapi \
     --override-private-base-url="http://books-api-v2.library-apis.svc.cluster.local/api/v2" \
     --oidc-issuer-type=keycloak \
-    --oidc-issuer-endpoint="https://threescale-zync:${RH_SSO_THREESCALE_SCALE_ZYNC_SECRET}@${RH_SSO_HOSTNAME}/auth/realms/toolbox-demo" \
+    --oidc-issuer-endpoint="https://threescale-zync:${RH_SSO_THREESCALE_ZYNC_SECRET}@${RH_SSO_HOSTNAME}/auth/realms/toolbox-demo" \
     --target_system_name=library-books-api \
     -d ${THREESCALE_TOOLBOX_DESTINATION} /tmp/toolbox/library-books-api/threescale/openapi/LibraryBooksAPI_v2.yaml
     ```
